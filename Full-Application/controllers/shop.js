@@ -1,44 +1,44 @@
 const Product = require("../models/product");
 const cart = require("../models/cart");
 exports.getproducts = (req, res, next) => {
-  Product.fetchAll(products=>{
-    res.render('shop/product-list',
+  Product.fetchAll()
+    .then(([rows,fieldData])=>{
+      res.render('shop/product-list',
       {
-        prods: products,
+        prods: rows,
         pageTitle:'All product',
         path: '/products',
-        hasproduct: products.length>0,
-        activeshop:true,
-        formsCSS:true
       });
-  });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getproduct = (req,res,next)=>{
   const productId = req.params.productId;
-  Product.findById(productId,product=>{
+  Product.findById(productId)
+  .then(([product])=>{
+    console.log(product);
     res.render('shop/product-detail',{
-      prods: product,
-        pageTitle: product.title,
+      prods: product[0],
+        pageTitle: product[0].title,
         path: '/products',
     });
-    console.log(product);
-  });
+  })
+  .catch(err=>console.log(err));
   // res.redirect('/');
 };
 
 exports.getIndex = (req,res,next)=>{
-  Product.fetchAll(products=>{
-    res.render('shop/index',
+  Product.fetchAll()
+    .then(([rows,fieldData])=>{
+      res.render('shop/index',
       {
-        prods: products,
+        prods: rows,
         pageTitle:'shop',
-        path: '/',
-        hasproduct: products.length>0,
-        activeshop:true,
-        formsCSS:true
+        path: '/'
       });
-  });
+    })
+    .catch(err => console.log(err));
 };
 
 
