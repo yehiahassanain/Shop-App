@@ -7,26 +7,69 @@ const app = express();
 const adminrouter = require('./routes/admin');
 const shoproutert = require('./routes/shop');
 const geterror = require('./controllers/errors');
-const db = require('./util/database');
-// const expressHbs = require('express-handlebars');
-// app.engine(
-//     'hbs',
-//     expressHbs({layoutsDir: 'views/layouts/',defaultLayout: 'main-layout',extname:'hbs'}));
+const sequelize = require('./util/database');
+const User = require('./models/user');
+const Product = require('./models/product');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
+const { name } = require('ejs');
+
 app.set('view engine','ejs');
 app.set('views','views');
 
-// db.execute('SELECT * FROM products')
-//     .then(result=>{
-//         console.log(result[0][0]);
-//     })
-//     .catch(err=>{
-//         console.log(err);
-//     });
 
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req,res,next)=>{
+    User.findByPk(1)
+    .then(user=>{
+        req.user = user;
+        next();
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+})
+
 app.use('/admin',adminrouter);
 app.use(shoproutert);
 app.use(geterror.get404);
 
-app.listen(3000);
+Product.belongsTo(User,{constraints: true, onDelete: 'CASCADE'});
+User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(Product);
+Product.belongsToMany(Cart,{through: CartItem});
+Cart.belongsToMany(Product,{through: CartItem});
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product,{through: OrderItem});
+
+sequelize
+    // .sync({force: true})
+    .sync()
+    .then(result=>{
+        return User.findByPk(1);
+        //  console.log(result);
+    })
+    .then(user=>{
+        if (!user){
+            return User.create({name: 'max', email: 'test@test.com'});
+        }
+        return user;
+    })
+    .then(user=>{
+        // console.log(user);
+        return user.createCart();
+    })
+    .then(cart=>{
+        app.listen(3000);
+    })
+    .catch(err=>{
+        console.log(err);
+    });
+     
+        
