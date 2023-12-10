@@ -7,14 +7,8 @@ const app = express();
 const adminrouter = require('./routes/admin');
 const shoproutert = require('./routes/shop');
 const geterror = require('./controllers/errors');
-const sequelize = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
-const Product = require('./models/product');
-const Cart = require('./models/cart');
-const CartItem = require('./models/cart-item');
-const Order = require('./models/order');
-const OrderItem = require('./models/order-item');
-const { name } = require('ejs');
 
 app.set('view engine','ejs');
 app.set('views','views');
@@ -24,52 +18,20 @@ app.use(bodyparser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req,res,next)=>{
-    User.findByPk(1)
+    User.findById('6571c3817268ccc78e93422f')
     .then(user=>{
-        req.user = user;
+        req.user = new User(user.name,user.email,user.cart,user._id);
         next();
     })
     .catch(err=>{
         console.log(err);
     })
-})
+});
 
 app.use('/admin',adminrouter);
 app.use(shoproutert);
 app.use(geterror.get404);
 
-Product.belongsTo(User,{constraints: true, onDelete: 'CASCADE'});
-User.hasMany(Product);
-User.hasOne(Cart);
-Cart.belongsTo(Product);
-Product.belongsToMany(Cart,{through: CartItem});
-Cart.belongsToMany(Product,{through: CartItem});
-Order.belongsTo(User);
-User.hasMany(Order);
-Order.belongsToMany(Product,{through: OrderItem});
-
-sequelize
-    // .sync({force: true})
-    .sync()
-    .then(result=>{
-        return User.findByPk(1);
-        //  console.log(result);
-    })
-    .then(user=>{
-        if (!user){
-            return User.create({name: 'max', email: 'test@test.com'});
-        }
-        return user;
-    })
-    .then(user=>{
-        // console.log(user);
-        return user.createCart();
-    })
-    .then(cart=>{
-        app.listen(3000);
-    })
-    .catch(err=>{
-        console.log(err);
-    });
-     
-        
+mongoConnect(()=>{
+    app.listen(3000);
+})
