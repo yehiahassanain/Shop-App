@@ -6,21 +6,39 @@ const express = require('express');
 const app = express();
 const adminrouter = require('./routes/admin');
 const shoproutert = require('./routes/shop');
+const authroutert = require('./routes/auth');
 const geterror = require('./controllers/errors');
 // const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 const mongoose = require('mongoose');
 const user = require('./models/user');
-
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 app.set('view engine','ejs');
 app.set('views','views');
 
+const MONGO_urI = 'mongodb+srv://yehiahassanain:efoszQPFvYVZGA8o@cluster0.j3razmw.mongodb.net/shop';
+const store = new MongoDBStore({
+    uri: MONGO_urI,
+    collection: 'sessions'
+});
 
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    session({
+    secret: 'my secret',
+     resave: false,
+     saveUninitialized: false,
+     store: store
+     })
+);
 
 app.use((req,res,next)=>{
-    User.findById('657e1e44f15620c72f05718e')
+    if (!req.session.user){
+        return next();
+    }
+    User.findById(req.session.user._id)
     .then(user=>{
         req.user = user;
         next();
@@ -32,11 +50,12 @@ app.use((req,res,next)=>{
 
 app.use('/admin',adminrouter);
 app.use(shoproutert);
+app.use(authroutert);
 app.use(geterror.get404);
 
 mongoose
     .connect(
-        'mongodb+srv://yehiahassanain:efoszQPFvYVZGA8o@cluster0.j3razmw.mongodb.net/shop?retryWrites=true&w=majority'
+        MONGO_urI
     )
     .then(result=>{
         User.findOne().then(user=>{
