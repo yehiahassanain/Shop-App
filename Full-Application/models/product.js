@@ -1,31 +1,35 @@
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
+
 const productSchema = new Schema({
-  title:{
-    type:String,
-    require:true
+  title: {
+    type: String,
+    required: true
   },
-  price:{
-    type:Number,
-    require:true
+  price: {
+    type: Number,
+    required: true
   },
-  description:{
-    type:String,
-    require:true
+  description: {
+    type: String,
+    required: true
   },
-  imageUrl:{
-    type:String,
-    require:true
+  imageUrl: {
+    type: String,
+    required: true
   },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    require: true
+    required: true
   }
 });
-module.exports = mongoose.model('Product',productSchema);
+
+module.exports = mongoose.model('Product', productSchema);
+
 // const mongodb = require('mongodb');
-// // const getDb = require('../util/database').getDb;
+// const getDb = require('../util/database').getDb;
 
 // class Product {
 //   constructor(title, price, description, imageUrl, id, userId) {
