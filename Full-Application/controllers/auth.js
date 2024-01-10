@@ -1,6 +1,16 @@
 const bcrypt = require('bcryptjs');
 
+const nodemailer = require('nodemailer');
+const postmarkTransport = require('nodemailer-postmark-transport');
+
 const User = require('../models/user');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    apikey: 'mailtrap. stackabuse[dot]com/how-to-send-emails-with-node-js/'
+  }
+}))
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -83,7 +93,14 @@ exports.postSignup = (req, res, next) => {
         })
         .then(result => {
           res.redirect('/login');
-        });
+          return transporter.sendMail({
+            to: email,
+            from: 'shop@node-complete.com',
+            subject: 'signup succeded!',
+            html: '<h1>your success full signed up!</h1>'
+          })
+        })
+        .catch(err=>console.log(err));
     })
     .catch(err => {
       console.log(err);
