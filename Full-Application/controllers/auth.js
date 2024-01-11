@@ -5,10 +5,10 @@ const postmarkTransport = require('nodemailer-postmark-transport');
 
 const User = require('../models/user');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
-
+///// send email but it not work
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
-    apikey: 'mailtrap. stackabuse[dot]com/how-to-send-emails-with-node-js/'
+    api_key: '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'
   }
 }))
 
@@ -93,9 +93,10 @@ exports.postSignup = (req, res, next) => {
         })
         .then(result => {
           res.redirect('/login');
+          ///// send email but it not work
           return transporter.sendMail({
             to: email,
-            from: 'shop@node-complete.com',
+            from: 'yehiahassanain@gmail.com',
             subject: 'signup succeded!',
             html: '<h1>your success full signed up!</h1>'
           })
