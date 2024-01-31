@@ -7,6 +7,8 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+ // extruct image from file 
+const multer = require('multer');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -20,6 +22,27 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 const csrfProtection = csrf();
+// there in var fileStorage store the destination and the name of image and path this is variable in multer
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.filename + '-' + file.originalname);
+  }
+});
+// there we make filter if we input a image or not
+const fileFilter = (req,file,cb)=>{
+  if (
+    file.mimetype === 'image/png'||
+    file.mimetype === 'image/jpg'||
+    file.mimetype === 'image/jpeg'
+  ){
+    cb(null,true);
+  }else{
+    cb(null,false);
+  }
+}
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -27,9 +50,15 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
-
+// extract image from URL as text and number not binary
 app.use(bodyParser.urlencoded({ extended: false }));
+ // extruct image from file as binsry image and make 
+//  file name image and store image that make uploaded
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images',express.static(path.join(__dirname, 'images')));
 app.use(
   session({
     secret: 'my secret',
