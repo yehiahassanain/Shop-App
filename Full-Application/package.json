@@ -31,9 +31,11 @@
     "nodemailer": "^6.9.8",
     "nodemailer-postmark-transport": "^6.0.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
+    "paymob": "^1.0.2",
     "pdfkit": "^0.14.0",
     "postmark": "^4.0.2",
     "pug": "^2.0.3",
-    "sequelize": "^5.0.0-beta.11"
+    "sequelize": "^5.0.0-beta.11",
+    "stripe": "^14.14.0"
   }
 }
