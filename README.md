@@ -28,4 +28,4 @@ The primary goal of the project is to facilitate buying and selling for all user
 
 
 
-## See the app demo from [here](https://drive.google.com/file/d/1ZerZGTy38DehoAqbOh4Du3tLksxVketJ/view)
+## See the app demo from [here](https://drive.google.com/file/d/1UW0-cb2MHjHhATBKk6peMC4fa86EBfUi/view?usp=sharing)
