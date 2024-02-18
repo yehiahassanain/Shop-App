@@ -13,11 +13,15 @@ The primary goal of the project is to facilitate buying and selling for all user
 ## Some Screenshots:
 
 <div>
-  <img src ="https://github.com/yehiahassanain/Book-App/assets/89047698/b2b31b55-86f4-47db-9af7-6816d173b567" width = 850 height =450>
+  <img src ="https://github.com/yehiahassanain/Book-App/assets/89047698/b2b31b55-86f4-47db-9af7-6816d173b567" width = 850 height =350>
 </div>
 <div>
-  <img src ="https://github.com/yehiahassanain/Book-App/assets/89047698/56377733-7150-4063-806a-0c54a005b608" width = 850 height =450>
+  <img src ="https://github.com/yehiahassanain/Book-App/assets/89047698/56377733-7150-4063-806a-0c54a005b608" width = 850 height =350>
 </div>
+<div>
+  <img src ="https://github.com/yehiahassanain/Book-App/assets/89047698/08195a5f-53b0-4afd-bf58-665627404b1b" width = 850 height =350>
+</div>
+
  
 
 
