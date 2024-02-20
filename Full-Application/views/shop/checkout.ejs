@@ -41,7 +41,7 @@
                     let data = {
                         "auth_token":  token,
                         "delivery_needed": "false",
-                        "amount_cents": "10000",
+                        "amount_cents": '<%= totalSum %>'*100,
                         "currency": "EGP",
                         "items": [],
                     }
@@ -58,7 +58,7 @@
                     async function thirdStep (token , id) {
                     let data = {
                         "auth_token": token,
-                        "amount_cents": "10000", 
+                        "amount_cents": '<%= totalSum %>'*100, 
                         "expiration": 3600, 
                         "order_id": id,
                         "billing_data": {
