@@ -7,8 +7,9 @@ The primary goal of the project is to facilitate buying and selling for all user
 1. NodeJs
 2. MVC
 3. mongoDB
-4. EJS
-5. CSS
+4. Session & Cookies
+6. EJS
+7. CSS
 
 ## Some Screenshots:
 
