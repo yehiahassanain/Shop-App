@@ -1,4 +1,4 @@
-# Book-App
+# Shop-App
 ## About
 
 The primary goal of the project is to facilitate buying and selling for all users. If a user wishes to sell a product, they will assume the role of an administrator, allowing them to add product details such as the name, image, price, and description. Conversely, if a user wishes to purchase a product, they can specify the desired item and quantity, and proceed with the purchase using  payment method.
