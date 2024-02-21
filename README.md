@@ -1,14 +1,20 @@
-# Book-App
-## About
+# Shop-App
 
-The primary goal of the project is to facilitate buying and selling for all users. If a user wishes to sell a product, they will assume the role of an administrator, allowing them to add product details such as the name, image, price, and description. Conversely, if a user wishes to purchase a product, they can specify the desired item and quantity, and proceed with the purchase using  payment method.
+The core objective of our project is to streamline the buying and selling experience for all users. Sellers can seamlessly transition into the role of administrators, enabling them to meticulously add product details, including name, image, price, and description. Conversely, buyers can effortlessly specify their desired items and quantities, facilitating seamless purchases through their preferred payment methods.
 
 ### Uses:
 1. NodeJs
 2. MVC
 3. mongoDB
-4. EJS
-5. CSS
+4. Session & Cookies
+6. EJS
+7. CSS
+
+## How to Use:
+1. Register/Login: Create an account or log in to access seller or buyer features.
+2. Sell Books: As a seller, add product details like title, image, price, and description.
+3. Browse & Buy: As a buyer, browse through listings, select desired books, and proceed to checkout.
+4. Payment: Complete the transaction using preferred payment method.
 
 ## Some Screenshots:
 
