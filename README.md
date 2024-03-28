@@ -15,6 +15,7 @@ The core objective of our project is to streamline the buying and selling experi
 2. Sell Books: As a seller, add product details like title, image, price, and description.
 3. Browse & Buy: As a buyer, browse through listings, select desired books, and proceed to checkout.
 4. Payment: Complete the transaction using preferred payment method.
+5. You can try use this app by this is link "https://shop-app-8.onrender.com"
 
 ## Some Screenshots:
 
